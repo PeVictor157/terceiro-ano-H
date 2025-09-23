@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O Ceará que Encanta o Brasil</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #b30000; /* vermelho teatral */
+      color: #fff;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Bandeirinhas no topo */
+    .bandeirinhas {
+      width: 100vw;
+      height: 60px;
+      background: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      pointer-events: none;
+    }
+    .bandeirinhas span {
+      font-size: 2.2rem;
+      margin: 0 2px;
+      user-select: none;
+    }
+
+    /* Máscaras teatrais decorativas */
+    .mascara-esq, .mascara-dir {
+      position: fixed;
+      top: 80px;
+      font-size: 4rem;
+      z-index: 10;
+      opacity: 0.7;
+      pointer-events: none;
+      text-shadow: 2px 2px 8px #000;
+    }
+    .mascara-esq {
+      left: 10px;
+      transform: rotate(-15deg);
+    }
+    .mascara-dir {
+      right: 10px;
+      transform: rotate(15deg);
+    }
+
+    header {
+      background: rgba(30,0,0,0.92);
+      padding: 60px 20px 50px 20px;
+      text-align: center;
+      border-bottom: 5px solid #fff;
+      margin-top: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      font-size: 2.7rem;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #ffd700;
+      text-shadow: 2px 2px 8px #900;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #ffe4e1;
+    }
+    header .icon {
+      font-size: 3.5rem;
+      margin: 15px 0;
+      color: #fff;
+      text-shadow: 2px 2px 8px #900;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    section {
+      margin-bottom: 80px;
+      padding: 40px;
+      border-radius: 12px;
+      background: rgba(40,0,0,0.93);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+      border: 2px solid #ffd700;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      border-left: 6px solid #ffd700;
+      padding-left: 12px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: #ffd700;
+      text-shadow: 1px 1px 6px #900;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+
+    .img-box {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .img-box img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 4px solid #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      transition: transform 0.3s;
+    }
+    .img-box img:hover {
+      transform: scale(1.05);
+    }
+
+    .qr {
+      text-align: center;
+    }
+    .qr img {
+      margin-top: 20px;
+      width: 220px;
+      height: 220px;
+      border: 6px solid #fff;
+      border-radius: 12px;
+      background: #000;
+      transition: transform 0.4s ease;
+    }
+    .qr img:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      background: #900;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #ffd700;
+      border-top: 4px solid #fff;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 6px #000;
+    }
+
+    .cortina {
+      width: 100vw;
+      height: 320px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      background: 
+        repeating-linear-gradient(90deg, #a80000 0 30px, #b30000 30px 60px),
+        linear-gradient(to bottom, #d90429 0%, #b30000 80%, #800000 100%);
+      border-bottom-left-radius: 60px 40px;
+      border-bottom-right-radius: 60px 40px;
+      box-shadow: 0 18px 40px 0 #80000099;
+      opacity: 0.98;
+      pointer-events: none;
+    }
+
+    /* Adicione ao seu <style> */
+    #Personalidade {
+      position: relative;
+      min-height: 400px;
+      overflow: hidden;
+    }
+    .amarelinha-flex {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 30px;
+      justify-content: flex-start;
+    }
+    .amarelinha-nome {
+      min-width: 170px;
+      z-index: 2;
+      margin-right: 0;
+    }
+    .seta-amarelinha {
+      width: 90px;
+      height: 40px;
+      object-fit: contain;
+      margin: 0 10px;
+      filter: drop-shadow(1px 1px 6px #900a);
+    }
+    .img-amarelinha {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      z-index: 2;
+      max-width: 48%;
+    }
+    .img-amarelinha img {
+      width: 340px;
+      max-width: 100%;
+      border-radius: 18px;
+      border: 5px solid #ffd700;
+      box-shadow: 0 6px 24px #900a;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .img-amarelinha {
+        position: static;
+        display: flex;
+        justify-content: center;
+        margin: 20px auto 0 auto;
+        max-width: 90vw;
+      }
+      .img-amarelinha img {
+        width: 90vw;
+        max-width: 320px;
+      }
+    }
+    @media (max-width: 700px) {
+      .amarelinha-flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+      }
+      .seta-amarelinha {
+        display: none;
+      }
+      .img-amarelinha {
+        margin-top: 10px;
+        max-width: 90vw;
+      }
+      .img-amarelinha img {
+        width: 90vw;
+        max-width: 320px;
+      }
+      .amarelinha-nome {
+        text-align: center;
+      }
+    }
+
+    #estilo-amarelinha {
+      margin-bottom: 80px;
+      padding: 40px;
+      border-radius: 12px;
+      background: rgba(40,0,0,0.93);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+      border: 2px solid #ffd700;
+      position: relative;
+    }
+    .estilo-amarelinha-flex {
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .estilo-texto {
+      flex: 2;
+      font-size: 1.1rem;
+      color: #fffbe7;
+    }
+    .estilo-imagens {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: flex-end;
+    }
+    .estilo-imagens img {
+      width: 140px;
+      max-width: 100%;
+      border-radius: 10px;
+      border: 3px solid #ffd700;
+      box-shadow: 0 4px 14px #900a;
+      background: #fff;
+      object-fit: cover;
+    }
+    @media (max-width: 900px) {
+      .estilo-amarelinha-flex {
+        flex-direction: column;
+        gap: 18px;
+      }
+      .estilo-imagens {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+      }
+      .estilo-imagens img {
+        width: 90px;
+      }
+    }
+
+    #aluna-caracterizada {
+      margin-bottom: 80px;
+      padding: 40px;
+      border-radius: 12px;
+      background: rgba(40,0,0,0.93);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+      border: 2px solid #ffd700;
+      position: relative;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    #aluna-caracterizada h2 {
+      font-size: 1.5rem;
+      color: #ffd700;
+      margin-bottom: 18px;
+      text-shadow: 1px 1px 6px #900;
+      border-left: 6px solid #ffd700;
+      padding-left: 12px;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+    .aluna-img-box {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .aluna-img-box img {
+      width: 180px;
+      max-width: 100%;
+      border-radius: 12px;
+      border: 4px solid #ffd700;
+      box-shadow: 0 4px 14px #900a;
+      background: #fff;
+      object-fit: cover;
+    }
+    @media (max-width: 900px) {
+      #aluna-caracterizada {
+        padding: 24px 10px;
+      }
+      .aluna-img-box img {
+        width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bandeirinhas">
+    <span>🔺🟩🔷🟨🔴🟦🟪🟧🔻</span>
+    <span>🔺🟩🔷🟨🔴🟦🟪🟧🔻</span>
+    <span>🔺🟩🔷🟨🔴🟦🟪🟧🔻</span>
+  </div>
+  <span class="mascara-esq">🎭</span>
+  <span class="mascara-dir">🎭</span>
+
+  <header>
+    <div class="icon">🎭</div>
+    <h1>O Ceará que Encanta o Brasil</h1>
+    <p>O Teatro Cearense e Suas Vozes</p>
+  </header>
+
+  <div class="container">
+    <section id="Personalidade">
+      <h1 style="font-size:2.3rem; color:#ffd700; margin-bottom:10px; text-shadow:2px 2px 8px #900;">
+        O Ceará que Encanta o Brasil
+      </h1>
+      <h2 style="font-size:1.4rem; color:#fffbe7; margin-bottom:30px; text-shadow:1px 1px 6px #900;">
+        O Teatro Cearense e Suas Vozes
+      </h2>
+      <div class="img-amarelinha">
+        <img src="amarelinha.jpeg" alt="Amarelinha">
+      </div>
+      <h1 class="amarelinha-nome" style="margin-top:40px; color:#ffd700; text-shadow:2px 2px 8px #900; font-size:2rem; margin-bottom:0;">
+        AMARELINHA
+      </h1>
+    </section>
+
+    <section id="AMARELINHA">
+      <h2>amarelinha</h2>
+      <p><strong>Nome:</strong> Amélia Cláudia Garcia Colares</p>
+      <p><strong>Nascimento:</strong> 21 de julho de 1950, Fortaleza – CE</p>
+      <p><strong>Profissão:</strong> Cantora</p>
+      <p>amarelinha começou sua trajetória artística na década de 1970, período
+em que a MPB fervilhava de novos talentos. Sua voz forte, marcante e
+ao mesmo tempo doce lhe garantiu espaço ao lado de grandes
+nomes da música.
+Em 1975, mudou-se para o Rio de Janeiro, onde passou a se aproximar
+de artistas como Belchior, Fagner, Ednardo e Zé Ramalho, que se
+tornariam grandes parceiros.
+Estreou em disco em 1976, mas seu grande sucesso veio em 1979
+com o álbum “Frevo Mulher”
+, que trazia a canção homônima de Zé
+Ramalho — até hoje um de seus maiores clássicos.
+Durante os anos 1980, consolidou-se com sucessos como “Foi Deus
+Quem Fez Você”
+
+.
+ <em>“Frevo Mulher”</em>, <em>“Foi Deus Quem Fez Você”</em> e <em>“É de Chocolate”</em>.</p>
+      <div class="img-box">
+        <img src="amarelinhaveia.png" alt="amarelinha cantora">
+      </div>
+    </section>
+
+    <section id="estilo-amarelinha">
+      <h2>O Estilo Musical de amarelinha</h2>
+      <div class="estilo-amarelinha-flex">
+        <div class="estilo-imagens">
+          <img src="amarelinhanv.png" alt="amarelinha cantando" />
+          <img src="forro.png" alt="amarelinha em show" />
+          <img src="cantora.png" alt="amarelinha em estúdio" />
+        </div>
+        <div class="estilo-texto">
+          <p>
+            amarelinha é conhecida por sua voz marcante e interpretação intensa, transitando entre o regional nordestino, a MPB e o folk brasileiro. Suas músicas trazem elementos da cultura popular, com letras poéticas e arranjos que misturam o tradicional e o moderno.
+          </p>
+          <p>
+            Ela se destaca por valorizar ritmos como o forró, o xote e o baião, além de parcerias com grandes nomes da música brasileira. Sua autenticidade e emoção ao cantar fazem de amarelinha uma referência no cenário musical do Brasil.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOVO: Aluna Caracterizada entre estilo musical e toré -->
+    <section id="aluna-caracterizada">
+      <h2>Aluna Caracterizada</h2>
+        <div class="img-box">
+        <img src="alunacaracterizada.png" alt="aluna-caracterizada">
+      </div>
+    </section>
+
+    <section id="tore">
+      <h2>Toré</h2>
+      <p>A dança do Toré (também escrita como
+Torém) é um ritual cultural e espiritual de
+diversos povos indígenas do Nordeste do
+Brasil, especialmente o povo Tremembé.
+Esta dança circular, acompanhada de
+cantos e instrumentos como o maracá, é
+um ato de resistência e união,
+fortalecendo a identidade cultural,
+invocando os ancestrais e conectando as
+gerações passadas. O ritual é um espaço
+de transmissão de saberes, de celebração
+da vida e de fortalecimento da cosmovisão
+indígena.
+</p>
+      <div class="img-box">
+        <img src="toredoidao.png" alt="Toré Povo Tremembé">
+      </div>
+    </section>
+
+    <section id="dote">
+      <h2>A peça: O Dote</h2>
+      <p>A peça narra a história de Ângelo, um homem ganancioso, cujo único
+interesse é o dote oferecido pela família de Henriqueta, uma jovem
+sonhadora e romântica que acredita no amor perfeito dos livros que
+lê.<p></p>
+
+No baile, Ângelo a conhece e aceita casar-se apenas pelo dinheiro. O
+noivado e o casamento seguem cheios de ilusões para Henriqueta,
+enquanto Ângelo pensa apenas na fortuna. Na lua de mel, ele
+consuma o casamento friamente para garantir a outra parte do dote.<P></P>
+
+
+Meses depois, Henriqueta anuncia sua gravidez, mas percebe a frieza
+do marido. Durante os nove meses, a jovem entristece, enquanto
+Ângelo, pouco a pouco, começa a mudar: vê o sofrimento da esposa
+e descobre um amor verdadeiro que antes desconhecia.</p>
+
+<p>Porém, no parto, a tragédia acontece: o bebê nasce sem vida e
+Henriqueta morre. Desesperado, Ângelo percebe que perdeu tudo o
+que realmente importava, reconhecendo tardiamente que o
+verdadeiro valor da vida não estava no ouro, mas no amor que só
+descobriu quando já não tinha mais</p>
+      <div class="img-box">
+    <img src="angelo.png" alt="Peça O Dote">
+
+    <img src="pai.png" alt="Peça O Dote">
+
+<img src="medico.png" alt="Peça O Dote">
+ 
+<img src="mae.png" alt="Peça O Dote">
+ 
+<img src="henriqueta.png" alt="Peça O Dote">
+
+
+    </section>
+    </section>
+
+    <section id="qr" class="qr">
+      <h2>Acesse o site</h2>
+      <p>📱 Escaneie para acessar este site:</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://pevictor157.github.io/3-ano.github.io/" alt="QR Code do site">
+    </section>
+  </div>
+
+  <footer>
+    Feira de Humanas — Escola Júlia Alves Pessoa | 2025 🎭
+  </footer>
+
+  <script>
+    // Revelação ao rolar
+    const sections = document.querySelectorAll('section');
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(sec => {
+        const boxTop = sec.getBoundingClientRect().top;
+        if (boxTop < triggerBottom) {
+          sec.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
+</body>
+</html>
